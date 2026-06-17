@@ -27,11 +27,77 @@
       z-index: 100;
     }
 
-    .nav-logo { font-size: 1.1rem; font-weight: 900; color: gold; text-decoration: none; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { color: #aaa; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; transition: color 0.3s; }
-    .nav-links a:hover, .nav-links a.active { color: gold; }
+    .nav-logo {
+      font-size: 1rem;
+      font-weight: 900;
+      color: gold;
+      text-decoration: none;
+      white-space: nowrap;
+    }
 
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: gold; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: gold;
+    }
+
+    /* Mobile Menu */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 55px; left: 0; right: 0;
+      background: #111;
+      flex-direction: column;
+      padding: 1rem 2rem;
+      gap: 1rem;
+      z-index: 99;
+      border-bottom: 1px solid rgba(255,215,0,0.2);
+    }
+
+    .mobile-nav.open { display: flex; }
+
+    .mobile-nav a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid #222;
+      transition: color 0.3s;
+    }
+
+    .mobile-nav a:hover { color: gold; }
+
+    /* HERO */
     .hero {
       flex: 1;
       display: flex;
@@ -74,6 +140,7 @@
 
     .hero-btn:hover { opacity: 0.8; }
 
+    /* FOOTER */
     footer {
       background: #0a0a0a;
       border-top: 1px solid rgba(255,215,0,0.2);
@@ -88,9 +155,9 @@
       gap: 2rem;
     }
 
-    .footer-brand h3 { color: gold; font-size: 1.2rem; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+    .footer-brand h3 { color: gold; font-size: 1.2rem; margin-bottom: 0.8rem; }
     .footer-brand p { color: #666; font-size: 0.85rem; line-height: 1.7; }
-    .footer-links h4, .footer-social h4 { color: white; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+    .footer-links h4, .footer-social h4 { color: white; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 1rem; }
     .footer-links, .footer-social { display: flex; flex-direction: column; gap: 0.6rem; }
     .footer-links a, .footer-social a { color: #666; text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
     .footer-links a:hover, .footer-social a:hover { color: gold; }
@@ -107,7 +174,11 @@
 
     .footer-bottom p { color: #444; font-size: 0.8rem; }
 
-    @media (max-width: 600px) {
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 0.8rem 1rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
       .footer-top { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
@@ -124,7 +195,18 @@
       <li><a href="articles.html">Articles</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="aboutus.html">About</a>
+    <a href="videos.html">Videos</a>
+    <a href="articles.html">Articles</a>
+    <a href="contact.html">Contact</a>
+  </div>
 
   <section class="hero">
     <div class="arabic">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْم</div>
@@ -150,10 +232,10 @@
       </div>
       <div class="footer-social">
         <h4>Follow Us</h4>
-        <a href="https://tiktok.com/@dawatehaq.q" target="_blank">🎵 TikTok</a>
-        <a href="https://youtube.com/@yourusername" target="_blank">▶️ YouTube</a>
-        <a href="https://wa.me/923XXXXXXXXX" target="_blank">💬 WhatsApp</a>
-        <a href="mailto:youremail@gmail.com">📧 Email</a>
+       <a href="https://tiktok.com/@dawatehaq.q" target="_blank">🎵 TikTok</a>
+        <a href="https://youtube.com/@Dawatehaq.q" target="_blank">▶️ YouTube</a>
+        <a href="https://wa.me/923245541337" target="_blank">💬 WhatsApp</a>
+        <a href="mailto:islamedu034@gmail.com">📧 Email</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -161,6 +243,14 @@
       <p>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْم</p>
     </div>
   </footer>
+
+  <script>
+    const btn = document.getElementById('hamburger');
+    const menu = document.getElementById('mobileNav');
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('open');
+    });
+  </script>
 
 </body>
 </html>
