@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Articles - Dawat E Haq</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0d0d0d;
+      font-family: 'Segoe UI', sans-serif;
+      color: #ccc;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(13,13,13,0.95);
+      border-bottom: 1px solid rgba(255,215,0,0.2);
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: gold;
+      text-decoration: none;
+      letter-spacing: 0.1em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: gold; }
+
+    /* PAGE */
+    .articles-page {
+      max-width: 1100px;
+      margin: 100px auto 60px auto;
+      padding: 2rem;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header h1 span { color: gold; }
+
+    .gold-line {
+      width: 100px;
+      height: 2px;
+      background: gold;
+      margin: 1rem auto;
+    }
+
+    .page-header p {
+      color: #888;
+      font-size: 0.95rem;
+    }
+
+    /* GRID */
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+    }
+
+    .article-card {
+      background: #161616;
+      border: 1px solid rgba(255,215,0,0.15);
+      border-radius: 12px;
+      padding: 1.6rem;
+      cursor: pointer;
+      transition: border-color 0.3s, transform 0.2s;
+    }
+
+    .article-card:hover {
+      border-color: gold;
+      transform: translateY(-4px);
+    }
+
+    .tag {
+      display: inline-block;
+      background: rgba(255,215,0,0.12);
+      color: gold;
+      font-size: 0.72rem;
+      padding: 0.25rem 0.8rem;
+      border-radius: 20px;
+      margin-bottom: 0.9rem;
+      letter-spacing: 0.08em;
+    }
+
+    .article-card h3 {
+      color: white;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 0.7rem;
+    }
+
+    .article-card .preview {
+      color: #777;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+
+    .read-btn {
+      color: gold;
+      font-size: 0.82rem;
+      background: none;
+      border: 1px solid rgba(255,215,0,0.3);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .read-btn:hover { background: rgba(255,215,0,0.1); }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: #161616;
+      border: 1px solid rgba(255,215,0,0.25);
+      border-radius: 14px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 2.5rem;
+      position: relative;
+      animation: popIn 0.3s ease;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1.2rem;
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover { color: gold; }
+
+    .modal .tag { margin-bottom: 1rem; }
+
+    .modal h2 {
+      color: white;
+      font-size: 1.4rem;
+      line-height: 1.4;
+      margin-bottom: 1.2rem;
+    }
+
+    .modal .hadith-box {
+      background: rgba(255,215,0,0.06);
+      border-left: 3px solid gold;
+      padding: 1rem 1.2rem;
+      border-radius: 6px;
+      margin: 1.2rem 0;
+      font-style: italic;
+      color: #ccc;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .modal .hadith-ref {
+      color: gold;
+      font-size: 0.78rem;
+      margin-top: 0.4rem;
+      font-style: normal;
+    }
+
+    .modal .body-text {
+      color: #999;
+      font-size: 0.9rem;
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+
+    .modal .section-title {
+      color: gold;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 1.4rem 0 0.5rem 0;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .article-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 500px) {
+      .article-grid { grid-template-columns: 1fr; }
+      .modal { padding: 1.5rem; }
+    }
+  </style>
+</head>
+
+
+
+<body>
+
+
+  <nav>
+    <a class="nav-logo" href="index.html">DAWAT E HAQ</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="articles.html" class="active">Articles</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="articles-page">
+    <div class="page-header">
+      <h1>Islamic <span>Articles</span></h1>
+      <div class="gold-line"></div>
+      <p>Quran, Hadith aur Sahaba Kiram ki zindagi ki roshni mein —</p>
+    </div>
+
+    <div class="article-grid" id="articleGrid"></div>
+  </section>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalContent">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    const articles = [
+
+      {
+        tag: "Hazrat Umar (R.A)",
+        title: "Hazrat Umar Farooq (R.A) ki Shahadat — Tarikhi Haqeeqat",
+        preview: "Hazrat Umar (R.A) ki shahadat kaise hui, kon tha qatil, aur Hadith ki roshni mein unka maqam...",
+        content: `
+          <div class="tag">Hazrat Umar (R.A)</div>
+          <h2>Hazrat Umar Farooq (R.A) ki Shahadat — Tarikhi Haqeeqat</h2>
+
+          <div class="hadith-box">
+            "Agar Mere baad koi Nabi hota to woh Umar hote."
+            <div class="hadith-ref">— Rasoolullah ﷺ | Tirmidhi: 3686</div>
+          </div>
+
+          <p class="body-text">Hazrat Umar ibn al-Khattab (R.A) Islam ke doosray Khalifa thay. Unka dor-e-khilafat (634–644 CE) Islam ki tarikhi fatoohat ka golden period tha. Iran, Iraq, Syria, aur Egypt is dor mein fatah hue.</p>
+
+          <div class="section-title">Shahadat ka Waqia</div>
+          <p class="body-text">26 Dhul Hijjah 23 Hijri ko Fajr ki namaz ke dauran Abu Lulu Firoz (ek Majusi ghulam) ne Hazrat Umar (R.A) par khanjaron se hamla kiya aur unhein 6 zakhm lagaye. 3 din baad 1 Muharram 24 Hijri ko unki shahadat hui. Unki umar us waqt 63 saal thi.</p>
+
+          <div class="hadith-box">
+            Hazrat Umar (R.A) ne farmaya: "Allah ka shukar hai jis ne meri shahadat ek Musalman ke haath se nahi ki."
+            <div class="hadith-ref">— Sahih Bukhari: 3700</div>
+          </div>
+
+          <div class="section-title"></div>
+          <p class="body-text">Hazrat Umar (R.A) ki shahadat ek Majusi ne ki — yeh ek historical fact hai jis mein koi ikhtilaaf nahi. Jo log is waqie ko firqawaarana rang dete hain woh tarikhi haqeeqat se bhagte hain. Umar (R.A) ka maqam itna buland tha ke Shaitan bhi unka rasta badal leta tha.</p>
+
+          <div class="hadith-box">
+            "Umar ke saaye se bhi Shaitan darta tha."
+            <div class="hadith-ref">— Sahih Bukhari: 3294</div>
+          </div>
+
+          <p class="body-text">Hazrat Umar (R.A) ne apni zindagi mein Baitul Maal se sirf utna liya jitna ek gareeb insaan ko kafi ho. Woh khud faqa karte aur ummat ko khilate. Yahi hai asli khilafat ka namuna.</p>
+        `
+      },
+
+      {
+        tag: "Hazrat Ali (R.A)",
+        title: "Hazrat Ali (R.A) ki Shahadat — Waqia aur Sabaq",
+        preview: "Hazrat Ali (R.A) kaun thay, unki shahadat kab aur kaise hui, aur Hadith mein unka kya maqam hai...",
+        content: `
+          <div class="tag">Hazrat Ali (R.A)</div>
+          <h2>Hazrat Ali (R.A) ki Shahadat — Waqia aur Sabaq</h2>
+
+          <div class="hadith-box">
+            "Ali mujh se aur main Ali se hoon."
+            <div class="hadith-ref">— Rasoolullah ﷺ | Tirmidhi: 3719</div>
+          </div>
+
+          <p class="body-text">Hazrat Ali ibn Abi Talib (R.A) Rasoolullah ﷺ ke chacha zaad bhai aur damaad thay. Woh Islam ke chauthe Khalifa thay (656–661 CE). Unka laqab "Asadullah" (Allah ka Sher) tha.</p>
+
+          <div class="section-title">Shahadat ka Waqia</div>
+          <p class="body-text">17 Ramadan 40 Hijri ko Fajr ki namaz ke waqt Masjid-e-Kufa mein Abdur Rahman ibn Muljam (Khariji) ne Hazrat Ali (R.A) par zeher mila hua talwar se hamla kiya. 2 din baad 19 Ramadan ko unki shahadat hui. Unki umar 63 saal thi.</p>
+
+          <div class="hadith-box">
+            "Ali se mohabbat Iman ki nishani hai aur Ali se bugz Nifaq ki nishani."
+            <div class="hadith-ref">— Sahih Muslim: 78</div>
+          </div>
+
+          <div class="section-title"></div>
+          <p class="body-text">Hazrat Ali (R.A) ko ek Khariji ne shaheed kiya — na kisi Sahabi ne, na Muawiya (R.A) ne. Khawarij woh log thay jinhon ne na Ali ko mana, na Muawiya ko. Unka aqeeda tha ke "Hukm sirf Allah ka hai" — aur is ke naam par dono ke khilaf they. Aaj bhi Khawarij ki soch zinda hai — jo apne aap ko haq par samjhe aur dusron ko kafir kahe.</p>
+
+          <div class="hadith-box">
+            "Khawarij Jahannam ke kuttay hain."
+            <div class="hadith-ref">— Ibn Majah: 173</div>
+          </div>
+
+          <p class="body-text">Hazrat Ali (R.A) ne apne qatil ke baare mein kaha: "Agar main zinda raha to main khud faisla karunga, agar mar gaya to sirf ek hi baar maro — mujhse zyada zulm mat karna." Yeh hai unka akhlaq.</p>
+        `
+      },
+
+      {
+        tag: "Muharram",
+        title: "Muharram — Fazilat, Roza aur Ashurah ki Haqeeqat",
+        preview: "Muharram ka mahina kyun khas hai, Ashurah ka roza kyun rakha jata hai, aur is mein kya karna durust hai...",
+        content: `
+          <div class="tag">Muharram</div>
+          <h2>Muharram — Fazilat, Roza aur Ashurah ki Haqeeqat</h2>
+
+          <div class="hadith-box">
+            "Ramadan ke baad afzal roza Allah ke mahine Muharram ka roza hai."
+            <div class="hadith-ref">— Sahih Muslim: 1163</div>
+          </div>
+
+          <p class="body-text">Muharram Islamic calendar ka pehla mahina hai. Yeh "Ashhur-ul-Hurum" (haram mahinon) mein se ek hai. Allah ne is mahine ko khud apna mahina kaha hai.</p>
+
+          <div class="section-title">10 Muharram — Youm-e-Ashurah</div>
+          <p class="body-text">Rasoolullah ﷺ Madinah tashreef laye to dekha ke Yahudi 10 Muharram ko roza rakhte hain. Aap ﷺ ne poocha to bole: "Is din Allah ne Musa (A.S) ko Firon se nijaat di thi." Aap ﷺ ne farmaya: "Hum Musa ke zyada haqdar hain" — aur roza rakha aur rakhhwaya.</p>
+
+          <div class="hadith-box">
+            "Ashurah ka roza pichle saal ke gunaah mita deta hai."
+            <div class="hadith-ref">— Sahih Muslim: 1162</div>
+          </div>
+
+          <div class="section-title"></div>
+          <p class="body-text"> Ashurah ka talluq Musa (A.S) ki nijaat se hai — Hazrat Hussain (R.A) ki shahadat se nahi. Karbala 61 Hijri mein hua, jabke Ashurah ka roza pehle se tha. In dono ko mix karna tarikhi ghalti hai. Muharram mein rona, maatam, zanjeer zani — yeh sab Quran aur Sahih Hadith se sabit nahi.</p>
+
+          <div class="section-title">Kya Karen Muharram Mein?</div>
+          <p class="body-text">✅ 9 aur 10 Muharram ka roza rakhen (ya 10 aur 11) — yeh Sunnah hai.<br/>✅ Zikr, ibadat, aur nafl namaz badhayen.<br/>❌ Maatam, seena koobi, zanjeer zani — yeh Islam mein nahi.</p>
+        `
+      },
+
+      {
+        tag: "Karbala",
+        title: "Waqia-e-Karbala — Tarikhi Haqeeqat Hadith ki Roshni Mein",
+        preview: "Karbala kya tha, kyun hua, aur is waqie ko samajhne ka sahih tareeqa kya hai...",
+        content: `
+          <div class="tag">Karbala</div>
+          <h2>Waqia-e-Karbala — Tarikhi Haqeeqat</h2>
+
+          <div class="hadith-box">
+            "Hussain mujh se hai aur main Hussain se hoon. Allah us se mohabbat kare jo Hussain se mohabbat kare."
+            <div class="hadith-ref">— Tirmidhi: 3775</div>
+          </div>
+
+          <p class="body-text">10 Muharram 61 Hijri ko Karbala (Iraq) mein Hazrat Hussain ibn Ali (R.A) aur unke 72 saathiyon ko Yazid ki fauj ne shaheed kiya. Yeh Islam ki tarikhi sabse badi musibaton mein se ek hai.</p>
+
+          <div class="section-title">Kyun Hua Yeh Waqia?</div>
+          <p class="body-text">Kufa ke logon ne Hazrat Hussain (R.A) ko khutoot likh kar bulaya aur bayat ka wada kiya. Jab Hussain (R.A) nikle to Kufa wale muk gaye. Ibn Ziyad (Yazid ka Governor) ne fauj bhej di. Hussain (R.A) ne Yazid ki bay'at se inkar kiya kyunke yeh unke zeemay deen ka mamla tha.</p>
+
+          <div class="section-title"></div>
+          <p class="body-text">Karbala ek siyasi aur askari waqia tha jis mein Hussain (R.A) ne haq par qaim reh kar shahadat qabool ki. Lekin is waqie ko har saal maatam aur azadari mein badal dena — yeh Hussain (R.A) ki sunnah nahi, balke ek baad mein ijad ki gayi baat hai. Hussain (R.A) ka asli sabaq tha: Haq baat kaho, chahe jaan jaaye.</p>
+
+          <div class="hadith-box">
+            "Shaheed ka dard sirf ek choonti ke katne jaisa hoga."
+            <div class="hadith-ref">— Tirmidhi: 1668</div>
+          </div>
+
+          <p class="body-text">Hazrat Hussain (R.A) se mohabbat ka sahi tareeqa yeh hai ke unke raaste par chalo — haq bolo, zulm se na daro, aur deen par qaim raho.</p>
+        `
+      },
+
+      {
+        tag: "Sahaba Kiram",
+        title: "Sahaba Kiram (R.A) — Unka Maqam aur Unse Mohabbat ka Hukm",
+        preview: "Quran aur Hadith mein Sahaba ka kya darja hai aur unke baare mein kya aqeeda rakhna zaroori hai...",
+        content: `
+          <div class="tag">Sahaba Kiram</div>
+          <h2>Sahaba Kiram (R.A) — Maqam aur Mohabbat</h2>
+
+          <div class="hadith-box">
+            "Mere Sahaba ke baare mein Allah se daro! Mere baad unhe nishana mat banao. Jo unse mohabbat karta hai woh meri mohabbat ki wajah se karta hai."
+            <div class="hadith-ref">— Tirmidhi: 3862</div>
+          </div>
+
+          <p class="body-text">Sahaba woh log hain jinhon ne Rasoolullah ﷺ ko Iman ki halat mein dekha aur Iman par mare. Quran ne unhe "Ridhwan" (Allah ki raza) ka certificate dia.</p>
+
+          <div class="hadith-box">
+            "Allah un sab se raazi hua aur woh sab Allah se raazi hue." 
+            <div class="hadith-ref">— Al-Quran 9:100</div>
+          </div>
+
+          <div class="section-title">Sahaba ki Aapsi Ikhtilafaat</div>
+          <p class="body-text">Sahaba ke darmiyan jo ikhtilafaat hue (jaise Jamal aur Siffeen ki jangein) — yeh ijtihadi ghaltiyan thin. Woh sab Jannat mein jayenge. Hadith mein hai ke Sahaba sitaron ki tarah hain — jis ki bhi pairwi karo hidayat payoge.</p>
+
+          <div class="section-title"></div>
+          <p class="body-text"> Jo log Sahaba par lanat bhejtay hain — unka hukm Quran aur Hadith ki roshni mein bohot sakht hai. Abu Bakr, Umar, Usman, Ali, Muawiya, Ayesha — ye sab Sahaba hain aur sab se mohabbat farz hai. Inhe taqseem karna Iblees ka kaam hai.</p>
+        `
+      },
+
+      {
+        tag: "Tawheed",
+        title: "Tawheed — Allah ki Wahdat par Yaqeen ki Buniyad",
+        preview: "Tawheed kya hai, yeh kitni qisam ka hai, aur shirk se kaise bachein — mukammal guide...",
+        content: `
+          <div class="tag">Tawheed</div>
+          <h2>Tawheed — Wahdat-e-Ilahi ki Buniyad</h2>
+
+          <div class="hadith-box">
+            "Jo shakhs is haal mein mara ke Allah ke saath kisi ko shareek nahi kiya woh Jannat mein jayega."
+            <div class="hadith-ref">— Sahih Bukhari: 129</div>
+          </div>
+
+          <p class="body-text">Tawheed ka matlab hai: Allah aik hai — uski Zaat mein, Sifaat mein, aur Ibadat mein. Yeh Islam ka sabse pehla aur sabse zaroori rukn hai.</p>
+
+          <div class="section-title">Tawheed ki 3 Aqsaam</div>
+          <p class="body-text">
+            <strong style="color:gold">1. Tawheed Rububiyah:</strong> Allah hi paida karta hai, rozi deta hai, maarta hai — koi shareek nahi.<br/><br/>
+            <strong style="color:gold">2. Tawheed Uluhiyah:</strong> Ibadat sirf Allah ki — dua, nazar, qurbani, tawakkul — sirf Usi ke liye.<br/><br/>
+            <strong style="color:gold">3. Tawheed Asma wa Sifaat:</strong> Allah ke naam aur sifaat waise hi manno jaise Quran aur Hadith mein hain.
+          </p>
+
+          <div class="hadith-box">
+            "Shirk sabse bada gunah hai."
+            <div class="hadith-ref">— Sahih Bukhari: 2653</div>
+          </div>
+
+          <div class="section-title"></div>
+          <p class="body-text"> Pakistan mein sabse bada masla Tawheed ka hi hai. Log qabron par jaate hain, buzurgon ko pukaarte hain — yeh Shirk ki taraf ja sakta hai. Ibadat sirf Allah ki — waseela Quran aur Sunnah se — yahi asli Tawheed hai.</p>
+        `
+      },
+
+      {
+        tag: "Hadith",
+        title: "Hadith ki Ahmiyat aur Sahih Hadith Kaise Pehchanein",
+        preview: "Hadith kya hai, kitni aqsaam hain, sahih aur zaeef ka farq — Engineer Muhammad Ali Mirza ki nazariyaat...",
+        content: `
+          <div class="tag">Hadith</div>
+          <h2>Hadith ki Ahmiyat aur Sahih Hadith ki Pehchaan</h2>
+
+          <div class="hadith-box">
+            "Jo meri itaat kare usne Allah ki itaat ki."
+            <div class="hadith-ref">— Al-Quran 4:80</div>
+          </div>
+
+          <p class="body-text">Hadith Rasoolullah ﷺ ke aqwal, afaal aur taqreer (khamoshi se ijazat) ka majmua hai. Quran ke baad yeh deen ka doosra sabse bada masdar hai.</p>
+
+          <div class="section-title">Hadith ki Aqsaam</div>
+          <p class="body-text">
+            <strong style="color:gold">Sahih:</strong> Sahih chain aur matn — jaise Bukhari, Muslim.<br/>
+            <strong style="color:gold">Hasan:</strong> Thori kamzori lekin qabil-e-amal.<br/>
+            <strong style="color:gold">Zaeef:</strong> Kamzor — is par amal احتیاط se.<br/>
+            <strong style="color:gold">Mauzu:</strong> Jhooti hadith — bilkul nahi manein.
+          </p>
+
+          <div class="hadith-box">
+            "Jo mujh par jaan bhoojh kar jhooti baat lagaye woh apna thikana Jahannam mein bana le."
+            <div class="hadith-ref">— Sahih Bukhari: 110</div>
+          </div>
+
+          <div class="section-title"></div>
+          <p class="body-text"> Har sunni sunai hadith par amal nahi karna chahiye. Pehle dekhو — kya yeh Sahih Bukhari ya Muslim mein hai? Kya isnad sahih hai? Mohaddiseen ne bohot mehnat se hadith ko parakh kar sahih aur zaeef alag kiya — unki tehqeeq ka faida uthao.</p>
+        `
+      },
+
+      {
+        tag: "Namaz",
+        title: "Namaz — Deen ka Satoon aur Iski Ahmiyat",
+        preview: "Namaz kyun farz hai, chhodne ka kya gunah hai, aur khushoo se namaz kaise padhi jaye...",
+        content: `
+          <div class="tag">Namaz</div>
+          <h2>Namaz — Deen ka Satoon</h2>
+
+          <div class="hadith-box">
+            "Namaz aur kufr ke darmiyan farq namaz ka chhodna hai."
+            <div class="hadith-ref">— Sahih Muslim: 82</div>
+          </div>
+
+          <p class="body-text">Namaz din mein 5 baar farz hai. Yeh Miraaj ki raat seedha Allah ne Rasoolullah ﷺ ko di — kisi farishte ke zariye nahi. Yeh Allah ka apne bande se seedha connection hai.</p>
+
+          <div class="section-title">Namaz ki Fazilat</div>
+          <p class="body-text">Ek hadith mein hai ke agar kisi ke ghar ke saamne nahr ho aur woh din mein 5 baar nahaaye to kya koi mail bachega? Bilkul nahi. Isi tarah namaz gunaah dhoti hai.</p>
+
+          <div class="hadith-box">
+            "Qiyamat ke din bandey se pehle namaz ka hisaab hoga."
+            <div class="hadith-ref">— Tirmidhi: 413</div>
+          </div>
+
+          <div class="section-title"></div>
+        `
+      },
+
+      {
+        tag: "Akhirat",
+        title: "Maut ke Baad Kya Hoga — Qabr, Hashr aur Jannat Jahannam",
+        preview: "Maut, qabr ka azaab ya sukoon, qiyamat ka din, aur Jannat Jahannam — Quran aur Hadith ki roshni mein...",
+        content: `
+          <div class="tag">Akhirat</div>
+          <h2>Maut ke Baad Kya Hoga</h2>
+
+          <div class="hadith-box">
+            "Aqlmand woh hai jo apne nafs ko qabu kare aur marne ke baad ki tayyari kare."
+            <div class="hadith-ref">— Tirmidhi: 2459</div>
+          </div>
+
+          <p class="body-text">Maut har zinda cheez ko aani hai. Marne ke baad barzakh ka alam shuru hota hai — jahan mominon ko sukoon aur gunahgaron ko azaab milta hai.</p>
+
+          <div class="section-title">Qabr ka Sawaal</div>
+          <p class="body-text">Munkar aur Nakeer do farishte aayenge aur 3 sawaal puchenge: Tera Rabb kaun? Tera deen kya? Yeh shakhs kaun tha (Rasoolullah ﷺ ke baare mein)?</p>
+
+          <div class="hadith-box">
+            "Momin keh dega: Mera Rabb Allah hai, mera deen Islam hai, yeh Muhammad ﷺ hain — phir qabr usके liye jannat ka bagicha ban jayegi."
+            <div class="hadith-ref">— Abu Dawud: 4753</div>
+          </div>
+
+          <div class="section-title">Tayyari Kaise Karen?</div>
+          <p class="body-text">✅ 5 waqt ki namaz<br/>✅ Quran ki tilawat aur amal<br/>✅ Sadqa-e-Jariyah — ilm, masjid, aulad-e-salih<br/>✅ Tauba aur istighfar<br/>✅ Logon ke haqooq ada karna</p>
+        `
+      },
+
+      {
+        tag: "Sunnah",
+        title: "Rozana ki Sunnatein Jo Zindagi Badal Den",
+        preview: "Woh chhoti chhoti Sunnatein jo hum bhool gaye lekin jinmein bada ajr hai — hadith ki roshni mein...",
+        content: `
+          <div class="tag">Sunnah</div>
+          <h2>Rozana ki Sunnatein Jo Zindagi Badal Den</h2>
+
+          <div class="hadith-box">
+            "Jo meri Sunnah se mohabbat karta hai woh mujhse mohabbat karta hai, aur jo mujhse mohabbat karta hai woh Jannat mein mera saathi hoga."
+            <div class="hadith-ref">— Tirmidhi: 2678</div>
+          </div>
+
+          <p class="body-text">Chhhoti chhhoti Sunnatein amalan bohot badi hain. Yeh sirf ibadat nahi — yeh Rasoolullah ﷺ se mohabbat ka izhar hai.</p>
+
+          <div class="section-title">Rozana ki Sunnatein</div>
+          <p class="body-text">
+            🌙 <strong style="color:gold">Subh:</strong> Uthte hi Alhamdulillah — Ayyat-ul-Kursi — Fajr ki 2 sunnatein<br/><br/>
+            🍽️ <strong style="color:gold">Khana:</strong> Bismillah — Dahini haath — milke khana<br/><br/>
+            😴 <strong style="color:gold">Sone se pehle:</strong> Ayatul Kursi — 3 Qul — Takbeer 33, Tahmeed 33, Tasbih 33<br/><br/>
+            🤲 <strong style="color:gold">Istinja:</strong> Bismillah bahar — Left haath — Pani use karna<br/><br/>
+            👟 <strong style="color:gold">Joote:</strong> Dahina pehle — Bayan utaaren pehle
+          </p>
+
+          <div class="hadith-box">
+            "Sone se pehle Ayatul Kursi padhne wale ki raat bhar ek farishta hifazat karta hai."
+            <div class="hadith-ref">— Sahih Bukhari: 5010</div>
+          </div>
+        `
+      },
+
+      {
+        tag: "Dua",
+        title: "Dua — Mominon ka Hathiyar aur Qubuliyat ke Ausaat",
+        preview: "Dua kab qabool hoti hai, kaunse ausaat hain, aur kaun si duaen Quran aur Hadith se sabse afzal hain...",
+        content: `
+          <div class="tag">Dua</div>
+          <h2>Dua — Mominon ka Hathiyar</h2>
+
+          <div class="hadith-box">
+            "Dua ibadat ka mughz hai."
+            <div class="hadith-ref">— Tirmidhi: 3371</div>
+          </div>
+
+          <p class="body-text">Dua seedha Allah se maangna hai. Isme koi beech wala nahi — koi peer nahi, koi waseela-e-shakhsiyat nahi. Seedha Allah se mango, woh sunta hai.</p>
+
+          <div class="section-title">Qubuliyat ke Ausaat</div>
+          <p class="body-text">
+            ⏰ <strong style="color:gold">Tahajjud ka waqt</strong> — raat ki aakhri tihayee<br/>
+            📿 <strong style="color:gold">Azan aur Iqamat ke darmiyan</strong><br/>
+            🙏 <strong style="color:gold">Sajde mein</strong><br/>
+            🌧️ <strong style="color:gold">Baarish ke waqt</strong><br/>
+            🤲 <strong style="color:gold">Juma ke din ek ghadi</strong>
+          </p>
+
+          <div class="hadith-box">
+            "Raat ke aakhri hisse mein Allah kehta hai: Kaun hai jo dua kare aur main qabool karun?"
+            <div class="hadith-ref">— Sahih Bukhari: 1145</div>
+          </div>
+
+          <div class="section-title">Sabse Afzal Dua</div>
+          <p class="body-text">Quran ki sabse badi dua: <strong style="color:gold">Surah Fatiha</strong> — yeh dua bhi hai aur Quran bhi. Aur Hadith ki dua: <em>"Rabbana atina fid dunya hasanah wa fil akhirati hasanah wa qina azaban naar"</em></p>
+        `
+      },
+
+      {
+        tag: "Islahi Baatein",
+        title: "Dawah ka Sahih Tareeqa — Quran aur Sunnah ki Roshni Mein",
+        preview: "Dawah kaise di jaye, kya engineer Muhammad Ali Mirza ka approach sahih hai, aur hum apni dawah kaise behtar karein...",
+        content: `
+          <div class="tag">Islahi Baatein</div>
+          <h2>Dawah ka Sahih Tareeqa</h2>
+
+          <div class="hadith-box">
+            "Apni taraf se ek ayat hi pohnchaao."
+            <div class="hadith-ref">— Sahih Bukhari: 3461</div>
+          </div>
+
+          <p class="body-text">Dawah — yani Allah ki taraf bulana — har Muslim ka farz hai. Aaj social media ke daur mein yeh kaam aasaan bhi ho gaya hai aur zyada zaroori bhi.</p>
+
+          <div class="section-title">Dawah ke Usool — Quran se</div>
+          <p class="body-text">
+            📖 <strong style="color:gold">Hikmat se:</strong> Samjh ke saath baat karo<br/>
+            💬 <strong style="color:gold">Achi naseehat:</strong> Naram lafzon mein<br/>
+            🤝 <strong style="color:gold">Behas:</strong> Behtareen tareeqe se — jhagra nahi
+          </p>
+
+          <div class="hadith-box">
+            "Apne Rabb ki raah ki taraf hikmat aur achi naseehat se bulao." 
+            <div class="hadith-ref">— Al-Quran 16:125</div>
+          </div>
+
+          <div class="section-title"></div>
+          <p class="body-text"> dawah ka khas andaaz yeh hai ke woh hamesha Quran aur Sahih Hadith ki daleel dete hain — kisi mazhab ya group ki taraf nahi bulaate. Kehte hain: "Main Quran aur Sunnah ki taraf bula raha hoon." Yahi asli dawah hai — apni taraf nahi, Allah ki taraf.</p>
+
+          <p class="body-text">Dawat E Haq bhi isi manhaj par hai — Quran aur Sahih Hadith — tafarruq nahi, ittehad. Yahi hai haq ki dawah.</p>
+        `
+      }
+
+    ];
+
+    // Render cards
+    const grid = document.getElementById('articleGrid');
+    articles.forEach((a, i) => {
+      grid.innerHTML += `
+        <div class="article-card" onclick="openModal(${i})">
+          <div class="tag">${a.tag}</div>
+          <h3>${a.title}</h3>
+          <p class="preview">${a.preview}</p>
+          <button class="read-btn">Pura Parhen →</button>
+        </div>
+      `;
+    });
+
+    // Modal
+    function openModal(i) {
+      document.getElementById('modalBody').innerHTML = articles[i].content;
+      document.getElementById('modalOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    document.getElementById('modalClose').onclick = closeModal;
+    document.getElementById('modalOverlay').onclick = function(e) {
+      if (e.target === this) closeModal();
+    };
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  </script>
+  
+ <footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <h3>DAWAT E HAQ</h3>
+      <p>Quran aur Sunnah ki roshni mein<br/>haq ki taraf dawat.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Pages</h4>
+      <a href="index.html">Home</a>
+      <a href="aboutus.html">About</a>
+      <a href="videos.html">Videos</a>
+      <a href="articles.html">Articles</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <div class="footer-social">
+      <h4>Follow Us</h4>
+      <a href="https://tiktok.com/@yourusername" target="_blank">🎵 TikTok</a>
+      <a href="https://youtube.com/@yourusername" target="_blank">▶️ YouTube</a>
+      <a href="https://wa.me/923XXXXXXXXX" target="_blank">💬 WhatsApp</a>
+      <a href="mailto:youremail@gmail.com">📧 Email</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Dawat E Haq — Sab Huqooq Mahfooz</p>
+    <p>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْم</p>
+  </div>
+</footer> 
+  
+
+</body>
+</html>

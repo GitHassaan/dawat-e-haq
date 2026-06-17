@@ -1,0 +1,275 @@
+
+
+/* Hero CSS mein yeh add karo */
+.hero {
+  min-height: 80vh;  /* yeh add karo */
+  margin-bottom: 0;
+}
+
+/* Body ka flex theek karo */
+body {
+  display: flex;
+  flex-direction: column;  /* yeh hona chahiye */
+}
+
+body{
+	
+	
+	
+}
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: #111;
+  border-bottom: 1px solid gold;
+}
+
+nav a {
+  color: gold;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+ul a {
+  color: white;
+  text-decoration: none;
+}
+
+ul a:hover {
+  color: gold;
+}
+/* ABOUT PAGE */
+.about {
+  max-width: 800px;
+  margin: 100px auto 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.about h1 {
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.about h1 span {
+  color: gold;
+}
+
+.line {
+  width: 100px;
+  height: 2px;
+  background: gold;
+  margin: 1rem auto 2rem auto;
+}
+
+.about p {
+  color: #aaa;
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.cards {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  background: #1a1a1a;
+  border: 1px solid rgba(255,215,0,0.2);
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 220px;
+  text-align: center;
+}
+
+.card h3 {
+  color: gold;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.card p {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* Active nav link */
+.active {
+  color: gold !important;
+  border-bottom: 1px solid gold;
+  padding-bottom: 2px;
+}
+
+body {
+  background: #0d0d0d;
+  font-family: sans-serif;
+}
+/* VIDEOS PAGE */
+.videos-page {
+  max-width: 1000px;
+  margin: 100px auto 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.videos-page h1 {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.videos-page h1 span {
+  color: gold;
+}
+
+.subtitle {
+  color: #888;
+  margin-bottom: 2.5rem;
+  font-size: 1rem;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.video-card {
+  background: #1a1a1a;
+  border: 1px solid rgba(255,215,0,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: left;
+}
+
+.video-wrap {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  height: 0;
+}
+
+.video-wrap iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-card h3 {
+  color: white;
+  padding: 1rem 1rem 0.3rem 1rem;
+  font-size: 1rem;
+}
+
+.video-card p {
+  color: #888;
+  padding: 0 1rem 1rem 1rem;
+  font-size: 0.85rem;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* FOOTER */
+footer {
+  background: #0a0a0a;
+  border-top: 1px solid rgba(255,215,0,0.2);
+  padding: 3rem 2.5rem 1.5rem 2.5rem;
+  margin-top: 4rem;
+}
+
+.footer-top {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-brand h3 {
+  color: gold;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.8rem;
+}
+
+.footer-brand p {
+  color: #666;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.footer-links h4,
+.footer-social h4 {
+  color: white;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.footer-links,
+.footer-social {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-links a,
+.footer-social a {
+  color: #666;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover,
+.footer-social a:hover {
+  color: gold;
+}
+
+.footer-bottom {
+  max-width: 1000px;
+  margin: 0 auto;
+  border-top: 1px solid #1a1a1a;
+  padding-top: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-bottom p {
+  color: #444;
+  font-size: 0.8rem;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
