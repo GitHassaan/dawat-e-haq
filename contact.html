@@ -4,331 +4,146 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact - Dawat E Haq</title>
-  <link rel="stylesheet" href="style.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      background: #0d0d0d;
-      font-family: 'Segoe UI', sans-serif;
-      color: #ccc;
-    }
-
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2.5rem;
-      background: rgba(13,13,13,0.95);
-      border-bottom: 1px solid rgba(255,215,0,0.2);
-      z-index: 100;
-    }
-
-    .nav-logo {
-      font-size: 1.1rem;
-      font-weight: 900;
-      color: gold;
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: #aaa;
-      text-decoration: none;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active { color: gold; }
-
-    /* PAGE */
-    .contact-page {
-      max-width: 700px;
-      margin: 120px auto 60px auto;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    .contact-page h1 {
-      font-size: 2.5rem;
-      color: white;
-      margin-bottom: 0.5rem;
-    }
-
+    body { background: #0d0d0d; font-family: 'Segoe UI', sans-serif; color: #ccc; display: flex; flex-direction: column; min-height: 100vh; }
+    nav { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2.5rem; background: rgba(13,13,13,0.95); border-bottom: 1px solid rgba(255,215,0,0.2); z-index: 100; }
+    .nav-logo { font-size: 1rem; font-weight: 900; color: gold; text-decoration: none; white-space: nowrap; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: #aaa; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: gold; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: gold; }
+    .mobile-nav { display: none; position: fixed; top: 55px; left: 0; right: 0; background: #111; flex-direction: column; padding: 1rem 2rem; gap: 1rem; z-index: 99; border-bottom: 1px solid rgba(255,215,0,0.2); }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { color: #aaa; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; padding: 0.3rem 0; border-bottom: 1px solid #222; }
+    .mobile-nav a:hover { color: gold; }
+    .contact-page { max-width: 700px; margin: 120px auto 60px auto; padding: 2rem; text-align: center; flex: 1; }
+    .contact-page h1 { font-size: 2.5rem; color: white; margin-bottom: 0.5rem; }
     .contact-page h1 span { color: gold; }
-
-    .gold-line {
-      width: 100px;
-      height: 2px;
-      background: gold;
-      margin: 1rem auto 2rem auto;
-    }
-
-    .contact-page p {
-      color: #888;
-      margin-bottom: 2.5rem;
-      font-size: 0.95rem;
-      line-height: 1.7;
-    }
-
-    /* SOCIAL CARDS */
-    .social-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.2rem;
-      margin-bottom: 3rem;
-    }
-
-    .social-card {
-      background: #161616;
-      border: 1px solid rgba(255,215,0,0.15);
-      border-radius: 12px;
-      padding: 1.5rem;
-      text-decoration: none;
-      transition: border-color 0.3s, transform 0.2s;
-      display: block;
-    }
-
-    .social-card:hover {
-      border-color: gold;
-      transform: translateY(-3px);
-    }
-
-    .social-icon {
-      font-size: 2rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .social-card h3 {
-      color: white;
-      font-size: 0.95rem;
-      margin-bottom: 0.3rem;
-    }
-
-    .social-card p {
-      color: #888;
-      font-size: 0.8rem;
-      margin: 0;
-    }
-
-    /* FORM */
-    .form-box {
-      background: #161616;
-      border: 1px solid rgba(255,215,0,0.15);
-      border-radius: 14px;
-      padding: 2rem;
-      text-align: left;
-    }
-
-    .form-box h2 {
-      color: white;
-      font-size: 1.2rem;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-
-    .form-group {
-      margin-bottom: 1.2rem;
-    }
-
-    .form-group label {
-      display: block;
-      color: #888;
-      font-size: 0.82rem;
-      margin-bottom: 0.4rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      background: #0d0d0d;
-      border: 1px solid rgba(255,215,0,0.2);
-      border-radius: 8px;
-      padding: 0.8rem 1rem;
-      color: white;
-      font-size: 0.9rem;
-      outline: none;
-      transition: border-color 0.3s;
-      font-family: inherit;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: gold;
-    }
-
-    .form-group textarea {
-      height: 130px;
-      resize: none;
-    }
-
-    .submit-btn {
-      width: 100%;
-      background: gold;
-      color: #0d0d0d;
-      border: none;
-      padding: 0.9rem;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.3s;
-      letter-spacing: 0.05em;
-    }
-
+    .gold-line { width: 100px; height: 2px; background: gold; margin: 1rem auto 2rem auto; }
+    .contact-page > p { color: #888; margin-bottom: 2.5rem; font-size: 0.95rem; line-height: 1.7; }
+    .social-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; margin-bottom: 3rem; }
+    .social-card { background: #161616; border: 1px solid rgba(255,215,0,0.15); border-radius: 12px; padding: 1.5rem; text-decoration: none; transition: border-color 0.3s, transform 0.2s; display: block; }
+    .social-card:hover { border-color: gold; transform: translateY(-3px); }
+    .social-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+    .social-card h3 { color: white; font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .social-card p { color: #888; font-size: 0.8rem; margin: 0; }
+    .form-box { background: #161616; border: 1px solid rgba(255,215,0,0.15); border-radius: 14px; padding: 2rem; text-align: left; }
+    .form-box h2 { color: white; font-size: 1.2rem; margin-bottom: 1.5rem; text-align: center; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; color: #888; font-size: 0.82rem; margin-bottom: 0.4rem; text-transform: uppercase; }
+    .form-group input, .form-group textarea { width: 100%; background: #0d0d0d; border: 1px solid rgba(255,215,0,0.2); border-radius: 8px; padding: 0.8rem 1rem; color: white; font-size: 0.9rem; outline: none; transition: border-color 0.3s; font-family: inherit; }
+    .form-group input:focus, .form-group textarea:focus { border-color: gold; }
+    .form-group textarea { height: 130px; resize: none; }
+    .submit-btn { width: 100%; background: gold; color: #0d0d0d; border: none; padding: 0.9rem; border-radius: 8px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: opacity 0.3s; }
     .submit-btn:hover { opacity: 0.85; }
-
-    .success-msg {
-      display: none;
-      background: rgba(255,215,0,0.1);
-      border: 1px solid gold;
-      border-radius: 8px;
-      padding: 1rem;
-      color: gold;
-      text-align: center;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 500px) {
+    .success-msg { display: none; background: rgba(255,215,0,0.1); border: 1px solid gold; border-radius: 8px; padding: 1rem; color: gold; text-align: center; margin-top: 1rem; font-size: 0.9rem; }
+    footer { background: #0a0a0a; border-top: 1px solid rgba(255,215,0,0.2); padding: 3rem 2.5rem 1.5rem 2.5rem; }
+    .footer-top { max-width: 1000px; margin: 0 auto 2rem auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; }
+    .footer-brand h3 { color: gold; font-size: 1.2rem; margin-bottom: 0.8rem; }
+    .footer-brand p { color: #666; font-size: 0.85rem; line-height: 1.7; }
+    .footer-links h4, .footer-social h4 { color: white; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-links, .footer-social { display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a, .footer-social a { color: #666; text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
+    .footer-links a:hover, .footer-social a:hover { color: gold; }
+    .footer-bottom { max-width: 1000px; margin: 0 auto; border-top: 1px solid #1a1a1a; padding-top: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
+    .footer-bottom p { color: #444; font-size: 0.8rem; }
+    @media (max-width: 768px) {
+      nav { padding: 0.8rem 1rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
       .social-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
   </style>
 </head>
-
-
-
-
 <body>
-
   <nav>
     <a class="nav-logo" href="index.html">DAWAT E HAQ</a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
+      <li><a href="aboutus.html">About</a></li>
       <li><a href="videos.html">Videos</a></li>
       <li><a href="articles.html">Articles</a></li>
       <li><a href="contact.html" class="active">Contact</a></li>
     </ul>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
-
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="aboutus.html">About</a>
+    <a href="videos.html">Videos</a>
+    <a href="articles.html">Articles</a>
+    <a href="contact.html">Contact</a>
+  </div>
   <section class="contact-page">
     <h1>Hamse <span>Rabta</span> Karein</h1>
     <div class="gold-line"></div>
-    <p>Koi sawal, mashwara, ya collaboration ke liye humse rabta karein. Hum khushi se jawab denge. InShaAllah.</p>
-
-    <!-- SOCIAL LINKS -->
+    <p>Koi sawal, mashwara, ya collaboration ke liye humse rabta karein. InShaAllah jald jawab denge.</p>
     <div class="social-grid">
-      <a class="social-card" href="https://tiktok.com/@yourusername" target="_blank">
-        <div class="social-icon">🎵</div>
-        <h3>TikTok</h3>
-        <p>@yourusername</p>
+      <a class="social-card" href="https://tiktok.com/@dawatehaq.q" target="_blank">
+        <div class="social-icon">🎵</div><h3>TikTok</h3><p>@dawatehaq.q</p>
       </a>
-      <a class="social-card" href="https://youtube.com/@yourusername" target="_blank">
-        <div class="social-icon">▶️</div>
-        <h3>YouTube</h3>
-        <p>Dawat E Haq</p>
+      <a class="social-card" href="https://youtube.com/@Dawatehaq.q" target="_blank">
+        <div class="social-icon">▶️</div><h3>YouTube</h3><p>@Dawatehaq.q</p>
       </a>
-      <a class="social-card" href="https://wa.me/923XXXXXXXXX" target="_blank">
-        <div class="social-icon">💬</div>
-        <h3>WhatsApp</h3>
-        <p>Message karein</p>
+      <a class="social-card" href="https://wa.me/923245541337" target="_blank">
+        <div class="social-icon">💬</div><h3>WhatsApp</h3><p>Message karein</p>
       </a>
-      <a class="social-card" href="mailto:youremail@gmail.com">
-        <div class="social-icon">📧</div>
-        <h3>Email</h3>
-        <p>youremail@gmail.com</p>
+      <a class="social-card" href="mailto:islamedu034@gmail.com">
+        <div class="social-icon">📧</div><h3>Email</h3><p>islamedu034@gmail.com</p>
       </a>
     </div>
-
-    <!-- CONTACT FORM -->
     <div class="form-box">
       <h2>✉️ Message Bhejein</h2>
-
-      <div class="form-group">
-        <label>Aapka Naam</label>
-        <input type="text" id="name" placeholder="Naam likhein..."/>
-      </div>
-
-      <div class="form-group">
-        <label>Email ya WhatsApp</label>
-        <input type="text" id="contact" placeholder="Email ya number..."/>
-      </div>
-
-      <div class="form-group">
-        <label>Message</label>
-        <textarea id="message" placeholder="Apna sawal ya mashwara likhein..."></textarea>
-      </div>
-
-      <button class="submit-btn" onclick="sendMessage()">
-        Bhejein →
-      </button>
-
-      <div class="success-msg" id="successMsg">
-        ✅ Shukriya! Aapka message mil gaya. InShaAllah jald jawab denge.
-      </div>
+      <div class="form-group"><label>Aapka Naam</label><input type="text" id="name" placeholder="Naam likhein..."/></div>
+      <div class="form-group"><label>Email ya WhatsApp</label><input type="text" id="contact" placeholder="Email ya number..."/></div>
+      <div class="form-group"><label>Message</label><textarea id="message" placeholder="Apna sawal ya mashwara likhein..."></textarea></div>
+      <button class="submit-btn" onclick="sendMessage()">Bhejein →</button>
+      <div class="success-msg" id="successMsg">✅ Shukriya! Aapka message mil gaya. InShaAllah jald jawab denge.</div>
     </div>
   </section>
-
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand"><h3>DAWAT E HAQ</h3><p>Quran aur Sunnah ki roshni mein<br/>haq ki taraf dawat.</p></div>
+      <div class="footer-links">
+        <h4>Pages</h4>
+        <a href="index.html">Home</a>
+        <a href="aboutus.html">About</a>
+        <a href="videos.html">Videos</a>
+        <a href="articles.html">Articles</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-social">
+        <h4>Follow Us</h4>
+        <a href="https://tiktok.com/@dawatehaq.q" target="_blank">🎵 TikTok</a>
+        <a href="https://youtube.com/@Dawatehaq.q" target="_blank">▶️ YouTube</a>
+        <a href="https://wa.me/923245541337" target="_blank">💬 WhatsApp</a>
+        <a href="mailto:islamedu034@gmail.com">📧 Email</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Dawat E Haq — Sab Huqooq Mahfooz</p>
+      <p>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْم</p>
+    </div>
+  </footer>
   <script>
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('mobileNav').classList.toggle('open');
+    });
     function sendMessage() {
       const name = document.getElementById('name').value.trim();
       const contact = document.getElementById('contact').value.trim();
       const message = document.getElementById('message').value.trim();
-
-      if (!name || !contact || !message) {
-        alert('Sab fields bharein!');
-        return;
-      }
-
-      // WhatsApp par send karo
+      if (!name || !contact || !message) { alert('Sab fields bharein!'); return; }
       const text = `*Dawat E Haq — Naya Message*%0A%0A*Naam:* ${name}%0A*Contact:* ${contact}%0A*Message:* ${message}`;
-      window.open(`https://wa.me/923XXXXXXXXX?text=${text}`, '_blank');
-
+      window.open(`https://wa.me/923245541337?text=${text}`, '_blank');
       document.getElementById('successMsg').style.display = 'block';
     }
   </script>
-<footer>
-  <div class="footer-top">
-    <div class="footer-brand">
-      <h3>DAWAT E HAQ</h3>
-      <p>Quran aur Sunnah ki roshni mein<br/>haq ki taraf dawat.</p>
-    </div>
-
-    <div class="footer-links">
-      <h4>Pages</h4>
-      <a href="index.html">Home</a>
-      <a href="aboutus.html">About</a>
-      <a href="videos.html">Videos</a>
-      <a href="articles.html">Articles</a>
-      <a href="contact.html">Contact</a>
-    </div>
-
-    <div class="footer-social">
-      <h4>Follow Us</h4>
-      <a href="https://tiktok.com/@yourusername" target="_blank">🎵 TikTok</a>
-      <a href="https://youtube.com/@yourusername" target="_blank">▶️ YouTube</a>
-      <a href="https://wa.me/923XXXXXXXXX" target="_blank">💬 WhatsApp</a>
-      <a href="mailto:youremail@gmail.com">📧 Email</a>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <p>© 2026 Dawat E Haq — Sab Huqooq Mahfooz</p>
-    <p>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْم</p>
-  </div>
-</footer>
 </body>
 </html>
