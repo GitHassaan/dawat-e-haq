@@ -2,11 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>About - Dawat E Haq</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0d0d0d; font-family: 'Segoe UI', sans-serif; color: #ccc; display: flex; flex-direction: column; min-height: 100vh; }
+    nav { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2.5rem; background: rgba(13,13,13,0.95); border-bottom: 1px solid rgba(255,215,0,0.2); z-index: 100; }
+    .nav-logo { font-size: 1rem; font-weight: 900; color: gold; text-decoration: none; white-space: nowrap; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: #aaa; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: gold; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: gold; }
+    .mobile-nav { display: none; position: fixed; top: 55px; left: 0; right: 0; background: #111; flex-direction: column; padding: 1rem 2rem; gap: 1rem; z-index: 99; border-bottom: 1px solid rgba(255,215,0,0.2); }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { color: #aaa; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; padding: 0.3rem 0; border-bottom: 1px solid #222; }
+    .mobile-nav a:hover { color: gold; }
+    .about { max-width: 800px; margin: 120px auto 60px auto; padding: 2rem; text-align: center; flex: 1; }
+    .about h1 { font-size: 2.5rem; color: white; margin-bottom: 0.5rem; }
+    .about h1 span { color: gold; }
+    .gold-line { width: 100px; height: 2px; background: gold; margin: 1rem auto 2rem auto; }
+    .about p { color: #888; font-size: 1rem; line-height: 1.8; margin-bottom: 1rem; }
+    .cards { display: flex; gap: 1.5rem; margin-top: 2.5rem; flex-wrap: wrap; justify-content: center; }
+    .card { background: #1a1a1a; border: 1px solid rgba(255,215,0,0.2); border-radius: 10px; padding: 1.5rem; width: 220px; }
+    .card h3 { color: gold; margin-bottom: 0.8rem; font-size: 1rem; }
+    .card p { color: #888; font-size: 0.9rem; }
+    footer { background: #0a0a0a; border-top: 1px solid rgba(255,215,0,0.2); padding: 3rem 2.5rem 1.5rem 2.5rem; }
+    .footer-top { max-width: 1000px; margin: 0 auto 2rem auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; }
+    .footer-brand h3 { color: gold; font-size: 1.2rem; margin-bottom: 0.8rem; }
+    .footer-brand p { color: #666; font-size: 0.85rem; line-height: 1.7; }
+    .footer-links h4, .footer-social h4 { color: white; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-links, .footer-social { display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a, .footer-social a { color: #666; text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
+    .footer-links a:hover, .footer-social a:hover { color: gold; }
+    .footer-bottom { max-width: 1000px; margin: 0 auto; border-top: 1px solid #1a1a1a; padding-top: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
+    .footer-bottom p { color: #444; font-size: 0.8rem; }
+    @media (max-width: 768px) {
+      nav { padding: 0.8rem 1rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .cards { flex-direction: column; align-items: center; }
+      .card { width: 100%; max-width: 320px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
 </head>
 <body>
-
   <nav>
     <a class="nav-logo" href="index.html">DAWAT E HAQ</a>
     <ul class="nav-links">
@@ -16,59 +58,56 @@
       <li><a href="articles.html">Articles</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
-
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="aboutus.html">About</a>
+    <a href="videos.html">Videos</a>
+    <a href="articles.html">Articles</a>
+    <a href="contact.html">Contact</a>
+  </div>
   <section class="about">
     <h1>About <span>Dawat E Haq</span></h1>
-    <div class="line"></div>
-    <p>Dawat E Haq is a platform dedicated to spreading the true message of Islam through authentic knowledge from Quran and Sunnah.</p>
-    <p>Our mission is to provide Islamic reminders, teachings, and guidance to Muslims around the world in a simple and clear way.</p>
-
+    <div class="gold-line"></div>
+    <p>Dawat E Haq ek aisi platform hai jo Islam ka sachcha paigham Quran aur Sunnah ki roshni mein phelaane ke liye waqf hai.</p>
+    <p>Hamara maqsad Muslims ko authentic Islamic ilm dena hai — bina kisi firqay ya mazhab ki taraf bulaaye. Sirf Quran aur Sahih Hadith.</p>
     <div class="cards">
-      <div class="card">
-        <h3>📖 Our Mission</h3>
-        <p>Spread authentic Islamic knowledge based on Quran and Hadith.</p>
-      </div>
-      <div class="card">
-        <h3>🎯 Our Goal</h3>
-        <p>Help Muslims strengthen their faith and practice Islam correctly.</p>
-      </div>
-      <div class="card">
-        <h3>📱 Our Content</h3>
-        <p>Short videos, articles, and reminders on TikTok, Reels, and more.</p>
-      </div>
+      <div class="card"><h3>📖 Hamara Mission</h3><p>Quran aur Hadith ki roshni mein sahih Islamic ilm phelana.</p></div>
+      <div class="card"><h3>🎯 Hamara Maqsad</h3><p>Muslims ko apna Iman mazboot karne mein madad karna.</p></div>
+      <div class="card"><h3>📱 Hamara Content</h3><p>Videos, articles aur reminders TikTok, Reels aur website par.</p></div>
     </div>
   </section>
   <footer>
-  <div class="footer-top">
-    <div class="footer-brand">
-      <h3>DAWAT E HAQ</h3>
-      <p>Quran aur Sunnah ki roshni mein<br/>haq ki taraf dawat.</p>
+    <div class="footer-top">
+      <div class="footer-brand"><h3>DAWAT E HAQ</h3><p>Quran aur Sunnah ki roshni mein<br/>haq ki taraf dawat.</p></div>
+      <div class="footer-links">
+        <h4>Pages</h4>
+        <a href="index.html">Home</a>
+        <a href="aboutus.html">About</a>
+        <a href="videos.html">Videos</a>
+        <a href="articles.html">Articles</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-social">
+        <h4>Follow Us</h4>
+        <a href="https://tiktok.com/@dawatehaq.q" target="_blank">🎵 TikTok</a>
+        <a href="https://youtube.com/@Dawatehaq.q" target="_blank">▶️ YouTube</a>
+        <a href="https://wa.me/923245541337" target="_blank">💬 WhatsApp</a>
+        <a href="mailto:islamedu034@gmail.com">📧 Email</a>
+      </div>
     </div>
-
-    <div class="footer-links">
-      <h4>Pages</h4>
-      <a href="index.html">Home</a>
-      <a href="aboutus.html">About</a>
-      <a href="videos.html">Videos</a>
-      <a href="articles.html">Articles</a>
-      <a href="contact.html">Contact</a>
+    <div class="footer-bottom">
+      <p>© 2026 Dawat E Haq — Sab Huqooq Mahfooz</p>
+      <p>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْم</p>
     </div>
-
-    <div class="footer-social">
-      <h4>Follow Us</h4>
-      <a href="https://tiktok.com/@yourusername" target="_blank">🎵 TikTok</a>
-      <a href="https://youtube.com/@yourusername" target="_blank">▶️ YouTube</a>
-      <a href="https://wa.me/923XXXXXXXXX" target="_blank">💬 WhatsApp</a>
-      <a href="mailto:youremail@gmail.com">📧 Email</a>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <p>© 2026 Dawat E Haq — Sab Huqooq Mahfooz</p>
-    <p>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْم</p>
-  </div>
-</footer>
-
+  </footer>
+  <script>
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('mobileNav').classList.toggle('open');
+    });
+  </script>
 </body>
 </html>
